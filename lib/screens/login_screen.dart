@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/gestures.dart';
+import 'package:yumquick/utils/theme.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -25,7 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
     emailController.addListener(() => setState(() {}));
     passwordController.addListener(() => setState(() {}));
 
-    // Initial log on page load
     print('LoginScreen loaded:');
     print('Email: Ark@arktini.com');
     print('Password: Ark123');
@@ -34,21 +34,20 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFD55F), // Yellow background
+      backgroundColor: AppColors.yellowDark,
       body: Stack(
         children: [
-          // 🟡 Top Yellow Header
           Positioned(
             top: 0,
             left: 0,
             right: 0,
             child: Container(
-              height: 150,
+              height: AppSizes.headerHeight,
               decoration: const BoxDecoration(
-                color: Color(0xFFFFD55F),
+                color: AppColors.yellowDark,
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
+                  bottomLeft: Radius.circular(AppSizes.cardRadius),
+                  bottomRight: Radius.circular(AppSizes.cardRadius),
                 ),
               ),
               padding: const EdgeInsets.only(
@@ -62,22 +61,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: GestureDetector(
                         onTap: () => context.go('/welcome'),
                         child: const Icon(Icons.arrow_back_ios_new,
-                            color: Colors.red),
+                            color: AppColors.error),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 16),
                   Align(
                     alignment: Alignment.center,
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 40),
                       child: Text(
                         headerText,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 28,
-                        ),
+                        style: AppTextStyles.header,
                       ),
                     ),
                   ),
@@ -85,8 +79,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-
-          // ⚪ Login Card
           Positioned(
             top: 200,
             left: 0,
@@ -95,10 +87,10 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
               decoration: const BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
+                  topLeft: Radius.circular(AppSizes.cardRadius),
+                  topRight: Radius.circular(AppSizes.cardRadius),
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -112,32 +104,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // 👇 Left-aligned header section
                     const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Welcome',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
+                        Text('Welcome', style: AppTextStyles.welcome),
                         SizedBox(height: 4),
                         Text(
                           'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black54,
-                          ),
+                          style: AppTextStyles.subtitle,
                         ),
                       ],
                     ),
                     const SizedBox(height: 32),
-
                     _buildInputField(
                       label: 'Email or Mobile Number',
                       icon: Icons.email,
@@ -151,19 +129,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       controller: passwordController,
                     ),
                     const SizedBox(height: 8),
-
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
                         onPressed: () {},
-                        child: const Text(
-                          'Forgot Password?',
-                          style: TextStyle(color: Colors.deepOrange),
-                        ),
+                        child: const Text('Forgot Password?',
+                            style: AppTextStyles.link),
                       ),
                     ),
                     const SizedBox(height: 8),
-
                     ElevatedButton(
                       onPressed: () {
                         final email = emailController.text.trim();
@@ -174,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('Login successful!'),
-                              backgroundColor: Colors.green,
+                              backgroundColor: AppColors.success,
                             ),
                           );
                           context.go('/home');
@@ -182,53 +156,48 @@ class _LoginScreenState extends State<LoginScreen> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('Invalid credentials!'),
-                              backgroundColor: Colors.red,
+                              backgroundColor: AppColors.error,
                             ),
                           );
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepOrange,
+                        backgroundColor: AppColors.deepOrange,
                         minimumSize: const Size.fromHeight(50),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius:
+                              BorderRadius.circular(AppSizes.buttonRadius),
                         ),
                       ),
-                      child: const Text('Log In',
-                          style: TextStyle(fontSize: 24, color: Colors.white)),
+                      child: const Text('Log In', style: AppTextStyles.button),
                     ),
                     const SizedBox(height: 16),
-
-                    const Text('or sign up with'),
+                    const Text('or sign up with', style: AppTextStyles.prompt),
                     const SizedBox(height: 12),
-
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.fingerprint,
-                            size: 36, color: Colors.deepOrange),
+                            size: AppSizes.iconSize,
+                            color: AppColors.deepOrange),
                         SizedBox(width: 16),
                         Icon(Icons.g_mobiledata,
-                            size: 36, color: Colors.deepOrange),
+                            size: AppSizes.iconSize,
+                            color: AppColors.deepOrange),
                         SizedBox(width: 16),
-                        Icon(Icons.apple, size: 32, color: Colors.deepOrange),
+                        Icon(Icons.apple,
+                            size: 32, color: AppColors.deepOrange),
                       ],
                     ),
                     const SizedBox(height: 20),
-
                     RichText(
                       text: TextSpan(
                         text: "Don't have an account? ",
-                        style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.black), // default black text
+                        style: AppTextStyles.prompt,
                         children: [
                           TextSpan(
                             text: 'Sign Up',
-                            style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.deepOrange),
+                            style: AppTextStyles.link,
                             recognizer: TapGestureRecognizer()
                               ..onTap = () => context.go('/signup'),
                           ),
@@ -245,6 +214,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  /// Reusable input field builder with custom styling from theme.dart
   Widget _buildInputField({
     required String label,
     required IconData icon,
@@ -254,13 +224,15 @@ class _LoginScreenState extends State<LoginScreen> {
     return TextField(
       controller: controller,
       obscureText: obscureText,
+      style: AppTextStyles.input,
       decoration: InputDecoration(
         filled: true,
-        fillColor: const Color(0xFFFFECB3), // Light yellow
+        fillColor: AppColors.lightYellow,
         labelText: label,
-        prefixIcon: Icon(icon),
+        labelStyle: AppTextStyles.subtitle,
+        prefixIcon: Icon(icon, color: AppColors.deepOrange),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(AppSizes.inputRadius),
           borderSide: BorderSide.none,
         ),
       ),

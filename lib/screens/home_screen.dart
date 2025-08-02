@@ -1,34 +1,110 @@
 import 'package:flutter/material.dart';
+import 'package:yumquick/utils/theme.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  Widget _buildDrawerItem(IconData icon, String title) {
+    return ListTile(
+      leading: Icon(icon, color: AppColors.white),
+      title: Text(
+        title,
+        style: const TextStyle(color: AppColors.white, fontSize: 16),
+      ),
+      onTap: () {},
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5CB58), // 🍋 Yellow background
-
+      endDrawer: Drawer(
+        width: 365,
+        backgroundColor: AppColors.deepOrange,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(90),
+            bottomLeft: Radius.circular(90),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundImage: AssetImage('assets/images/avatar.png'),
+                    ),
+                    SizedBox(width: 12),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'John Smith',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          'loremipsum@email.com',
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 30),
+              _buildDrawerItem(Icons.shopping_bag_outlined, 'My Orders'),
+              _buildDrawerItem(Icons.person_outline, 'My Profile'),
+              _buildDrawerItem(Icons.location_on_outlined, 'Delivery Address'),
+              _buildDrawerItem(Icons.credit_card_outlined, 'Payment Methods'),
+              _buildDrawerItem(Icons.phone_outlined, 'Contact Us'),
+              _buildDrawerItem(Icons.help_outline, 'Help & FAQs'),
+              _buildDrawerItem(Icons.settings_outlined, 'Settings'),
+              const Spacer(),
+              const Divider(color: Colors.white54),
+              TextButton.icon(
+                onPressed: () => Navigator.of(context).pop(),
+                icon: const Icon(Icons.logout, color: AppColors.white),
+                label: const Text('Log Out',
+                    style: TextStyle(color: AppColors.white)),
+              ),
+            ],
+          ),
+        ),
+      ),
+      backgroundColor: AppColors.yellowDark,
       body: Stack(
         children: [
-          // ✅ Main Content
           SafeArea(
             bottom: false,
             child: Column(
               children: [
-                // 🍋 Header
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   child: Row(
                     children: [
-                      // 🔍 Search Bar
                       Expanded(
                         child: Container(
                           height: 40,
                           padding: const EdgeInsets.symmetric(horizontal: 12),
                           decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(30),
+                            color: AppColors.white,
+                            borderRadius:
+                                BorderRadius.circular(AppSizes.buttonRadius),
                           ),
                           child: const Row(
                             children: [
@@ -37,47 +113,43 @@ class HomeScreen extends StatelessWidget {
                               Text('Search',
                                   style: TextStyle(color: Colors.grey)),
                               Spacer(),
-                              Icon(Icons.tune, color: Colors.deepOrange),
+                              Icon(Icons.tune, color: AppColors.deepOrange),
                             ],
                           ),
                         ),
                       ),
                       const SizedBox(width: 12),
                       const Icon(Icons.shopping_cart_outlined,
-                          color: Colors.white),
+                          color: AppColors.white),
                       const SizedBox(width: 12),
-                      const Icon(Icons.notifications_none, color: Colors.white),
+                      const Icon(Icons.notifications_none,
+                          color: AppColors.white),
                       const SizedBox(width: 12),
-                      const Icon(Icons.person_outline, color: Colors.white),
+                      Builder(
+                        builder: (context) => GestureDetector(
+                          onTap: () => Scaffold.of(context).openEndDrawer(),
+                          child: const Icon(Icons.person_outline,
+                              color: AppColors.white),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-
-                // 🍋 Greeting text
-                // 🍋 Greeting text
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0), // optional for side margin
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         SizedBox(height: 10),
-                        Text(
-                          'Good Morning',
-                          style: TextStyle(
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
+                        Text('Good Morning', style: AppTextStyles.welcome),
                         SizedBox(height: 4),
                         Text(
                           "Rise And Shine! It's Breakfast Time",
                           style: TextStyle(
                             fontSize: 14,
-                            color: Color(0xFFFF5722),
+                            color: AppColors.deepOrange,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -85,25 +157,21 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 10),
-
-                // ⚪️ White content area
                 Expanded(
                   child: Container(
                     width: double.infinity,
                     decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(30)),
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(AppSizes.cardRadius),
+                      ),
                     ),
                     child: SingleChildScrollView(
-                      padding: const EdgeInsets.fromLTRB(16, 20, 16,
-                          80), // 👈 extra bottom padding for floating nav bar
+                      padding: const EdgeInsets.fromLTRB(16, 20, 16, 80),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // 🍽️ Categories
                           const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -119,8 +187,6 @@ class HomeScreen extends StatelessWidget {
                             ],
                           ),
                           const SizedBox(height: 20),
-
-                          // 🔥 Best Seller
                           const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -129,7 +195,8 @@ class HomeScreen extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18)),
                               Text('View All',
-                                  style: TextStyle(color: Color(0xFFFF5722))),
+                                  style:
+                                      TextStyle(color: AppColors.deepOrange)),
                             ],
                           ),
                           const SizedBox(height: 12),
@@ -150,10 +217,7 @@ class HomeScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-
                           const SizedBox(height: 20),
-
-                          // 🎉 Promo Banner
                           Padding(
                             padding: const EdgeInsets.all(16),
                             child: ClipRRect(
@@ -175,7 +239,7 @@ class HomeScreen extends StatelessWidget {
                                       child: const Text(
                                         ' Experience our \n Delicious New Dish',
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: AppColors.white,
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -191,7 +255,7 @@ class HomeScreen extends StatelessWidget {
                                       child: const Text(
                                         ' 30% OFF',
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: AppColors.white,
                                           fontSize: 36,
                                           fontWeight: FontWeight.w900,
                                         ),
@@ -202,10 +266,7 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-
                           const SizedBox(height: 20),
-
-                          // ⭐ Recommend
                           const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -214,7 +275,8 @@ class HomeScreen extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18)),
                               Text('View All',
-                                  style: TextStyle(color: Color(0xFFFF5722))),
+                                  style:
+                                      TextStyle(color: AppColors.deepOrange)),
                             ],
                           ),
                           const SizedBox(height: 12),
@@ -224,23 +286,26 @@ class HomeScreen extends StatelessWidget {
                               scrollDirection: Axis.horizontal,
                               children: const [
                                 ProductCard(
-                                    imageUrl: 'assets/images/Rectangle137.png',
-                                    price: '\$10.0',
-                                    showRating: true,
-                                    rating: '5.0',
-                                    isLarge: true),
+                                  imageUrl: 'assets/images/Rectangle137.png',
+                                  price: '\$10.0',
+                                  showRating: true,
+                                  rating: '5.0',
+                                  isLarge: true,
+                                ),
                                 ProductCard(
-                                    imageUrl: 'assets/images/Rectangle128.png',
-                                    price: '\$25.0',
-                                    showRating: true,
-                                    rating: '4.5',
-                                    isLarge: true),
+                                  imageUrl: 'assets/images/Rectangle128.png',
+                                  price: '\$25.0',
+                                  showRating: true,
+                                  rating: '4.5',
+                                  isLarge: true,
+                                ),
                                 ProductCard(
-                                    imageUrl: 'assets/images/Rectangle134.png',
-                                    price: '\$32.0',
-                                    showRating: true,
-                                    rating: '4.7',
-                                    isLarge: true),
+                                  imageUrl: 'assets/images/Rectangle134.png',
+                                  price: '\$32.0',
+                                  showRating: true,
+                                  rating: '4.7',
+                                  isLarge: true,
+                                ),
                               ],
                             ),
                           ),
@@ -253,16 +318,14 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-
-          // ✅ Floating Bottom Navigation Bar Overlay
           Positioned(
             left: 10,
             right: 10,
             bottom: 25,
             child: Container(
               decoration: BoxDecoration(
-                color: const Color(0xFFFF6F00),
-                borderRadius: BorderRadius.circular(30),
+                color: AppColors.orange,
+                borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
                 boxShadow: const [
                   BoxShadow(
                     color: Colors.black12,
@@ -276,30 +339,25 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.home_outlined,
-                        color: Colors.white, size: 28),
-                    onPressed: () {},
-                  ),
+                      icon: const Icon(Icons.home_outlined,
+                          color: AppColors.white, size: 28),
+                      onPressed: () {}),
                   IconButton(
-                    icon:
-                        const Icon(Icons.search, color: Colors.white, size: 28),
-                    onPressed: () {},
-                  ),
+                      icon: const Icon(Icons.search,
+                          color: AppColors.white, size: 28),
+                      onPressed: () {}),
                   IconButton(
-                    icon: const Icon(Icons.shopping_cart_outlined,
-                        color: Colors.white, size: 28),
-                    onPressed: () {},
-                  ),
+                      icon: const Icon(Icons.shopping_cart_outlined,
+                          color: AppColors.white, size: 28),
+                      onPressed: () {}),
                   IconButton(
-                    icon: const Icon(Icons.favorite_border,
-                        color: Colors.white, size: 28),
-                    onPressed: () {},
-                  ),
+                      icon: const Icon(Icons.favorite_border,
+                          color: AppColors.white, size: 28),
+                      onPressed: () {}),
                   IconButton(
-                    icon: const Icon(Icons.person_outline,
-                        color: Colors.white, size: 28),
-                    onPressed: () {},
-                  ),
+                      icon: const Icon(Icons.person_outline,
+                          color: AppColors.white, size: 28),
+                      onPressed: () {}),
                 ],
               ),
             ),
@@ -310,7 +368,6 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-// ✅ Reusable widgets (same as before)
 class CategoryIcon extends StatelessWidget {
   final String label;
   final IconData icon;
@@ -334,7 +391,7 @@ class CategoryIcon extends StatelessWidget {
               ),
             ],
           ),
-          child: Icon(icon, color: Colors.deepOrange, size: 20),
+          child: Icon(icon, color: AppColors.deepOrange, size: 20),
         ),
         const SizedBox(height: 6),
         Text(label, style: const TextStyle(fontSize: 12)),
@@ -381,16 +438,14 @@ class ProductCard extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.85),
+                  color: AppColors.white.withOpacity(0.85),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
                   children: [
-                    Text(
-                      rating,
-                      style: const TextStyle(
-                          fontSize: 10, fontWeight: FontWeight.bold),
-                    ),
+                    Text(rating,
+                        style: const TextStyle(
+                            fontSize: 10, fontWeight: FontWeight.bold)),
                     const SizedBox(width: 2),
                     const Icon(Icons.star, size: 12, color: Colors.amber),
                   ],
@@ -400,22 +455,22 @@ class ProductCard extends StatelessWidget {
           const Positioned(
             top: 8,
             right: 8,
-            child: Icon(Icons.favorite_border, color: Colors.white, size: 20),
+            child:
+                Icon(Icons.favorite_border, color: AppColors.white, size: 20),
           ),
-          // 🍊 Price tag
           Positioned(
             bottom: 30,
             right: -1,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: Colors.deepOrange,
+                color: AppColors.deepOrange,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
                 price,
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: AppColors.white,
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
                 ),

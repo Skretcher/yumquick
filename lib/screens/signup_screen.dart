@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/gestures.dart';
+import 'package:yumquick/utils/theme.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
@@ -8,10 +9,10 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFD55F),
+      backgroundColor: AppColors.yellowDark,
       body: Stack(
         children: [
-          // 🟡 Yellow Header
+          // 🟡 Header Section with yellow background and back button
           Positioned(
             top: 0,
             left: 0,
@@ -19,10 +20,10 @@ class SignupScreen extends StatelessWidget {
             child: Container(
               height: 250,
               decoration: const BoxDecoration(
-                color: Color(0xFFFFD55F),
+                color: AppColors.yellowDark,
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
+                  bottomLeft: Radius.circular(AppSizes.cardRadius),
+                  bottomRight: Radius.circular(AppSizes.cardRadius),
                 ),
               ),
               padding: const EdgeInsets.only(left: 16, right: 16, top: 50),
@@ -35,7 +36,7 @@ class SignupScreen extends StatelessWidget {
                       child: GestureDetector(
                         onTap: () => context.go('/login'),
                         child: const Icon(Icons.arrow_back_ios_new,
-                            color: Colors.red),
+                            color: AppColors.error),
                       ),
                     ),
                   ),
@@ -45,11 +46,7 @@ class SignupScreen extends StatelessWidget {
                       padding: EdgeInsets.only(bottom: 40),
                       child: Text(
                         'New Account',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 28,
-                        ),
+                        style: AppTextStyles.header,
                       ),
                     ),
                   ),
@@ -58,7 +55,7 @@ class SignupScreen extends StatelessWidget {
             ),
           ),
 
-          // ⚪ Signup Form
+          // ⚪ Form Card
           Positioned(
             top: 200,
             left: 0,
@@ -67,10 +64,10 @@ class SignupScreen extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
               decoration: const BoxDecoration(
-                color: Colors.white,
+                color: AppColors.white,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
+                  topLeft: Radius.circular(AppSizes.cardRadius),
+                  topRight: Radius.circular(AppSizes.cardRadius),
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -98,22 +95,16 @@ class SignupScreen extends StatelessWidget {
                       child: Text.rich(
                         TextSpan(
                           text: 'By continuing, you agree to ',
-                          style: TextStyle(fontSize: 12),
+                          style: AppTextStyles.subtitle,
                           children: [
                             TextSpan(
                               text: 'Terms of Use',
-                              style: TextStyle(
-                                color: Colors.deepOrange,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: AppTextStyles.link,
                             ),
                             TextSpan(text: ' and '),
                             TextSpan(
                               text: 'Privacy Policy.',
-                              style: TextStyle(
-                                color: Colors.deepOrange,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: AppTextStyles.link,
                             ),
                           ],
                         ),
@@ -126,39 +117,42 @@ class SignupScreen extends StatelessWidget {
                         context.go('/home');
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepOrange,
+                        backgroundColor: AppColors.deepOrange,
                         minimumSize: const Size.fromHeight(50),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius:
+                              BorderRadius.circular(AppSizes.buttonRadius),
                         ),
                       ),
-                      child: const Text('Sign Up',
-                          style: TextStyle(fontSize: 24, color: Colors.white)),
+                      child: const Text('Sign Up', style: AppTextStyles.button),
                     ),
                     const SizedBox(height: 12),
-                    const Text('or sign up with'),
+                    const Text('or sign up with', style: AppTextStyles.prompt),
                     const SizedBox(height: 12),
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.fingerprint,
-                            size: 36, color: Colors.deepOrange),
+                            size: AppSizes.iconSize,
+                            color: AppColors.deepOrange),
                         SizedBox(width: 16),
                         Icon(Icons.g_mobiledata,
-                            size: 36, color: Colors.deepOrange),
+                            size: AppSizes.iconSize,
+                            color: AppColors.deepOrange),
                         SizedBox(width: 16),
-                        Icon(Icons.apple, size: 32, color: Colors.deepOrange),
+                        Icon(Icons.apple,
+                            size: 32, color: AppColors.deepOrange),
                       ],
                     ),
                     const SizedBox(height: 20),
                     RichText(
                       text: TextSpan(
                         text: "Already have an account? ",
-                        style: const TextStyle(color: Colors.black),
+                        style: AppTextStyles.prompt,
                         children: [
                           TextSpan(
                             text: 'Log in',
-                            style: const TextStyle(color: Colors.deepOrange),
+                            style: AppTextStyles.link,
                             recognizer: TapGestureRecognizer()
                               ..onTap = () => context.go('/login'),
                           ),
@@ -175,15 +169,18 @@ class SignupScreen extends StatelessWidget {
     );
   }
 
+  /// Reusable input field for signup with theme integration
   Widget _buildInputField(String label, {bool obscureText = false}) {
     return TextField(
       obscureText: obscureText,
+      style: AppTextStyles.input,
       decoration: InputDecoration(
         filled: true,
-        fillColor: const Color(0xFFFFECB3),
+        fillColor: AppColors.lightYellow,
         labelText: label,
+        labelStyle: AppTextStyles.subtitle,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(AppSizes.inputRadius),
           borderSide: BorderSide.none,
         ),
       ),
