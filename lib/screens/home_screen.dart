@@ -6,26 +6,22 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true, // for floating effect
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFFFFD55F), Color(0xFFFFCC80)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
-        child: SafeArea(
-          child: SingleChildScrollView(
+      backgroundColor: const Color(0xFFF5CB58), // 🍋 Yellow background
+
+      body: Stack(
+        children: [
+          // ✅ Main Content
+          SafeArea(
+            bottom: false,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Search & Icons
+                // 🍋 Header
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   child: Row(
                     children: [
+                      // 🔍 Search Bar
                       Expanded(
                         child: Container(
                           height: 40,
@@ -57,191 +53,264 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
 
-                // Greetings
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 10),
-                      Text(
-                        'Good Morning',
-                        style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(height: 4),
-                      Text(
-                        "Rise And Shine! It's Breakfast Time",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Color(0xFFFF5722),
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-
-                // White Container
-                Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(30)),
-                  ),
+                // 🍋 Greeting text
+                // 🍋 Greeting text
+                const Align(
+                  alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 20, 16, 90),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0), // optional for side margin
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Categories
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CategoryIcon(label: "Snacks", icon: Icons.fastfood),
-                            CategoryIcon(label: "Meal", icon: Icons.restaurant),
-                            CategoryIcon(label: "Vegan", icon: Icons.eco),
-                            CategoryIcon(
-                                label: "Dessert", icon: Icons.icecream),
-                            CategoryIcon(
-                                label: "Drinks", icon: Icons.local_drink),
-                          ],
-                        ),
-
-                        const SizedBox(height: 20),
-
-                        // Best Seller
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Best Seller',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 18)),
-                            Text('View All',
-                                style: TextStyle(color: Color(0xFFFF5722))),
-                          ],
-                        ),
-
-                        const SizedBox(height: 12),
-                        SizedBox(
-                          height: 160,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: const [
-                              ProductCard(
-                                  imageUrl: 'assets/images/Rectangle133.png',
-                                  price: '\$103.0'),
-                              ProductCard(
-                                  imageUrl: 'assets/images/Rectangle134.png',
-                                  price: '\$50.0'),
-                              ProductCard(
-                                  imageUrl: 'assets/images/Rectangle135.png',
-                                  price: '\$12.99'),
-                            ],
+                      children: const [
+                        SizedBox(height: 10),
+                        Text(
+                          'Good Morning',
+                          style: TextStyle(
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ),
-
-                        const SizedBox(height: 20),
-
-                        // Promo Banner
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(16),
-                          child: Image.asset(
-                            'assets/images/Frame71.png',
-                            height: 140,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-
-                        const SizedBox(height: 20),
-
-                        // Recommend
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Recommend',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 18)),
-                            Text('View All',
-                                style: TextStyle(color: Color(0xFFFF5722))),
-                          ],
-                        ),
-                        const SizedBox(height: 12),
-                        SizedBox(
-                          height: 220, // Larger height than Best Seller
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: const [
-                              ProductCard(
-                                imageUrl: 'assets/images/Rectangle137.png',
-                                price: '\$10.0',
-                                showRating: true,
-                                rating: '5.0',
-                                isLarge: true,
-                              ),
-                              ProductCard(
-                                imageUrl: 'assets/images/Rectangle128.png',
-                                price: '\$25.0',
-                                showRating: true,
-                                rating: '4.5',
-                                isLarge: true,
-                              ),
-                              ProductCard(
-                                imageUrl: 'assets/images/Rectangle134.png',
-                                price: '\$32.0',
-                                showRating: true,
-                                rating: '4.7',
-                                isLarge: true,
-                              ),
-                            ],
+                        SizedBox(height: 4),
+                        Text(
+                          "Rise And Shine! It's Breakfast Time",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Color(0xFFFF5722),
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
+
+                const SizedBox(height: 10),
+
+                // ⚪️ White content area
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(30)),
+                    ),
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.fromLTRB(16, 20, 16,
+                          80), // 👈 extra bottom padding for floating nav bar
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // 🍽️ Categories
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CategoryIcon(
+                                  label: "Snacks", icon: Icons.fastfood),
+                              CategoryIcon(
+                                  label: "Meal", icon: Icons.restaurant),
+                              CategoryIcon(label: "Vegan", icon: Icons.eco),
+                              CategoryIcon(
+                                  label: "Dessert", icon: Icons.icecream),
+                              CategoryIcon(
+                                  label: "Drinks", icon: Icons.local_drink),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+
+                          // 🔥 Best Seller
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Best Seller',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18)),
+                              Text('View All',
+                                  style: TextStyle(color: Color(0xFFFF5722))),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          SizedBox(
+                            height: 160,
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              children: const [
+                                ProductCard(
+                                    imageUrl: 'assets/images/Rectangle133.png',
+                                    price: '\$103.0'),
+                                ProductCard(
+                                    imageUrl: 'assets/images/Rectangle134.png',
+                                    price: '\$50.0'),
+                                ProductCard(
+                                    imageUrl: 'assets/images/Rectangle135.png',
+                                    price: '\$12.99'),
+                              ],
+                            ),
+                          ),
+
+                          const SizedBox(height: 20),
+
+                          // 🎉 Promo Banner
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(16),
+                              child: Stack(
+                                children: [
+                                  Image.asset(
+                                    'assets/images/Frame71.png',
+                                    height: 140,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  Positioned(
+                                    left: 16,
+                                    top: 16,
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 6),
+                                      child: const Text(
+                                        ' Experience our \n Delicious New Dish',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 10,
+                                    top: 70,
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 6),
+                                      child: const Text(
+                                        ' 30% OFF',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 36,
+                                          fontWeight: FontWeight.w900,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+
+                          const SizedBox(height: 20),
+
+                          // ⭐ Recommend
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Recommend',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18)),
+                              Text('View All',
+                                  style: TextStyle(color: Color(0xFFFF5722))),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          SizedBox(
+                            height: 220,
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
+                              children: const [
+                                ProductCard(
+                                    imageUrl: 'assets/images/Rectangle137.png',
+                                    price: '\$10.0',
+                                    showRating: true,
+                                    rating: '5.0',
+                                    isLarge: true),
+                                ProductCard(
+                                    imageUrl: 'assets/images/Rectangle128.png',
+                                    price: '\$25.0',
+                                    showRating: true,
+                                    rating: '4.5',
+                                    isLarge: true),
+                                ProductCard(
+                                    imageUrl: 'assets/images/Rectangle134.png',
+                                    price: '\$32.0',
+                                    showRating: true,
+                                    rating: '4.7',
+                                    isLarge: true),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
-        ),
-      ),
 
-      // Bottom NavBar – Floating style
-      bottomNavigationBar: Container(
-        margin: const EdgeInsets.all(16),
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(30),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.08),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
+          // ✅ Floating Bottom Navigation Bar Overlay
+          Positioned(
+            left: 10,
+            right: 10,
+            bottom: 25,
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFFFF6F00),
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.home_outlined,
+                        color: Colors.white, size: 28),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon:
+                        const Icon(Icons.search, color: Colors.white, size: 28),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.shopping_cart_outlined,
+                        color: Colors.white, size: 28),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.favorite_border,
+                        color: Colors.white, size: 28),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.person_outline,
+                        color: Colors.white, size: 28),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Icon(Icons.home, color: Colors.deepOrange),
-            Icon(Icons.favorite_border, color: Colors.grey),
-            Icon(Icons.shopping_bag_outlined, color: Colors.grey),
-            Icon(Icons.receipt_long, color: Colors.grey),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
 
-// Category icon widget
+// ✅ Reusable widgets (same as before)
 class CategoryIcon extends StatelessWidget {
   final String label;
   final IconData icon;
@@ -274,7 +343,6 @@ class CategoryIcon extends StatelessWidget {
   }
 }
 
-// Product card widget
 class ProductCard extends StatelessWidget {
   final String imageUrl;
   final String price;
@@ -334,9 +402,10 @@ class ProductCard extends StatelessWidget {
             right: 8,
             child: Icon(Icons.favorite_border, color: Colors.white, size: 20),
           ),
+          // 🍊 Price tag
           Positioned(
-            bottom: 8,
-            right: 8,
+            bottom: 30,
+            right: -1,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(

@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
             left: 0,
             right: 0,
             child: Container(
-              height: 250,
+              height: 150,
               decoration: const BoxDecoration(
                 color: Color(0xFFFFD55F),
                 borderRadius: BorderRadius.only(
@@ -51,7 +51,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   bottomRight: Radius.circular(30),
                 ),
               ),
-              padding: const EdgeInsets.only(left: 16, right: 16, top: 50),
+              padding: const EdgeInsets.only(
+                  left: 16, right: 16, top: 50, bottom: 0),
               child: Stack(
                 children: [
                   Align(
