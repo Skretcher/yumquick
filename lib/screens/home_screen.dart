@@ -1,23 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:yumquick/utils/theme.dart';
+import 'package:yumquick/utils/bottomnav.dart ';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
-  Widget _buildDrawerItem(IconData icon, String title) {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _currentIndex = 0;
+
+  void _onNavTap(int index) {
+    setState(() => _currentIndex = index);
+
+    // You can navigate with context.go('/route') here
+    // if you want each tab to push a screen.
+
+    switch (index) {
+      case 0:
+        context.go('/home');
+        break;
+      case 1:
+        context.go('/search');
+        break;
+      case 2:
+        context.go('/cart');
+        break;
+      case 3:
+        context.go('/favorites');
+        break;
+      case 4:
+        context.go('/profile');
+        break;
+    }
+  }
+
+  Widget _buildDrawerItem(IconData icon, String title, {VoidCallback? onTap}) {
     return ListTile(
       leading: Icon(icon, color: AppColors.white),
       title: Text(
         title,
         style: const TextStyle(color: AppColors.white, fontSize: 16),
       ),
-      onTap: () {},
+      onTap: onTap,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //Drawer configuration
       endDrawer: Drawer(
         width: 365,
         backgroundColor: AppColors.deepOrange,
@@ -66,17 +101,27 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              _buildDrawerItem(Icons.shopping_bag_outlined, 'My Orders'),
+              _buildDrawerItem(Icons.shopping_bag_rounded, 'My Orders',
+                  onTap: () {
+                Navigator.pop(context); // Close the drawer
+                context.go('/orders');
+              }),
+              const Divider(color: Colors.white54),
               _buildDrawerItem(Icons.person_outline, 'My Profile'),
+              const Divider(color: Colors.white54),
               _buildDrawerItem(Icons.location_on_outlined, 'Delivery Address'),
+              const Divider(color: Colors.white54),
               _buildDrawerItem(Icons.credit_card_outlined, 'Payment Methods'),
+              const Divider(color: Colors.white54),
               _buildDrawerItem(Icons.phone_outlined, 'Contact Us'),
+              const Divider(color: Colors.white54),
               _buildDrawerItem(Icons.help_outline, 'Help & FAQs'),
+              const Divider(color: Colors.white54),
               _buildDrawerItem(Icons.settings_outlined, 'Settings'),
               const Spacer(),
               const Divider(color: Colors.white54),
               TextButton.icon(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () => context.go("/login"),
                 icon: const Icon(Icons.logout, color: AppColors.white),
                 label: const Text('Log Out',
                     style: TextStyle(color: AppColors.white)),
@@ -85,6 +130,8 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
+
+// AppBar configuration
       backgroundColor: AppColors.yellowDark,
       body: Stack(
         children: [
@@ -318,50 +365,58 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-            left: 10,
-            right: 10,
-            bottom: 25,
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppColors.orange,
-                borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 10,
-                    offset: Offset(0, 4),
-                  ),
-                ],
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                      icon: const Icon(Icons.home_outlined,
-                          color: AppColors.white, size: 28),
-                      onPressed: () {}),
-                  IconButton(
-                      icon: const Icon(Icons.search,
-                          color: AppColors.white, size: 28),
-                      onPressed: () {}),
-                  IconButton(
-                      icon: const Icon(Icons.shopping_cart_outlined,
-                          color: AppColors.white, size: 28),
-                      onPressed: () {}),
-                  IconButton(
-                      icon: const Icon(Icons.favorite_border,
-                          color: AppColors.white, size: 28),
-                      onPressed: () {}),
-                  IconButton(
-                      icon: const Icon(Icons.person_outline,
-                          color: AppColors.white, size: 28),
-                      onPressed: () {}),
-                ],
-              ),
-            ),
+
+          // // Bottom navigation bar
+          BottomNav(
+            currentIndex: _currentIndex,
+            onTap: _onNavTap,
           ),
+
+          // Positioned(
+          //   left: 10,
+          //   right: 10,
+          //   bottom: 25,
+          //   child: Container(
+          //     decoration: BoxDecoration(
+          //       color: AppColors.orange,
+          //       borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
+          //       boxShadow: const [
+          //         BoxShadow(
+          //           color: Colors.black12,
+          //           blurRadius: 10,
+          //           offset: Offset(0, 4),
+          //         ),
+          //       ],
+          //     ),
+          //     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //       children: [
+          //         IconButton(
+          //             icon: const Icon(Icons.home_outlined,
+          //                 color: AppColors.white, size: 28),
+          //             onPressed: () {}),
+          //         IconButton(
+          //             icon: const Icon(Icons.search,
+          //                 color: AppColors.white, size: 28),
+          //             onPressed: () {}),
+          //         IconButton(
+          //             icon: const Icon(Icons.shopping_cart_outlined,
+          //                 color: AppColors.white, size: 28),
+          //             onPressed: () {}),
+          //         IconButton(
+          //             icon: const Icon(Icons.favorite_border,
+          //                 color: AppColors.white, size: 28),
+          //             onPressed: () {}),
+          //         IconButton(
+          //             icon: const Icon(Icons.person_outline,
+          //                 color: AppColors.white, size: 28),
+          //             onPressed: () {}),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // //End bottom navigation bar
         ],
       ),
     );
