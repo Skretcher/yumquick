@@ -55,6 +55,18 @@ class AppTextStyles {
     fontSize: 14,
     color: AppColors.text,
   );
+
+  static const title = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: AppColors.deepOrange,
+  );
+
+  static const price = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+    color: AppColors.deepOrange,
+  );
 }
 
 /// 📐 Common Sizes, Padding, Radius, Icon Sizes

@@ -1,15 +1,15 @@
 // lib/widgets/bottomnav.dart
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:yumquick/utils/theme.dart';
 
 class BottomNav extends StatelessWidget {
   final int currentIndex;
-  final void Function(int) onTap;
 
   const BottomNav({
     super.key,
     required this.currentIndex,
-    required this.onTap,
   });
 
   @override
@@ -20,7 +20,7 @@ class BottomNav extends StatelessWidget {
       bottom: 25,
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.orange,
+          color: AppColors.deepOrange,
           borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
           boxShadow: const [
             BoxShadow(
@@ -34,18 +34,19 @@ class BottomNav extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _navItem(index: 0, icon: Icons.home_outlined),
-            _navItem(index: 1, icon: Icons.dinner_dining_outlined),
-            _navItem(index: 2, icon: Icons.favorite_border_outlined),
-            _navItem(index: 3, icon: Icons.assignment_outlined),
-            _navItem(index: 4, icon: Icons.support_agent_outlined),
+            _navItem(context, index: 0, icon: Icons.home_outlined),
+            _navItem(context, index: 1, icon: Icons.dinner_dining_outlined),
+            _navItem(context, index: 2, icon: Icons.favorite_border_outlined),
+            _navItem(context, index: 3, icon: Icons.assignment_outlined),
+            _navItem(context, index: 4, icon: Icons.support_agent_outlined),
           ],
         ),
       ),
     );
   }
 
-  Widget _navItem({
+  Widget _navItem(
+    BuildContext context, {
     required int index,
     IconData? icon,
     String? assetPath,
@@ -53,7 +54,25 @@ class BottomNav extends StatelessWidget {
     final isSelected = index == currentIndex;
 
     return IconButton(
-      onPressed: () => onTap(index),
+      onPressed: () {
+        switch (index) {
+          case 0:
+            context.go('/home');
+            break;
+          case 1:
+            context.go('/menu');
+            break;
+          case 2:
+            context.go('/favourites');
+            break;
+          case 3:
+            context.go('/orders');
+            break;
+          case 4:
+            context.go('/support');
+            break;
+        }
+      },
       icon: assetPath != null
           ? Image.asset(
               assetPath,

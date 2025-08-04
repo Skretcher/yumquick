@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yumquick/utils/theme.dart';
-import 'package:yumquick/utils/bottomnav.dart';
 
 class MyOrdersScreen extends StatefulWidget {
   const MyOrdersScreen({super.key});
@@ -12,7 +11,7 @@ class MyOrdersScreen extends StatefulWidget {
 
 class _MyOrdersScreenState extends State<MyOrdersScreen> {
   int _selectedTab = 0;
-  int _currentIndex = 0;
+  //int _currentIndex = 0;
 
   final List<String> tabs = ['Active', 'Completed', 'Cancelled'];
 
@@ -113,33 +112,6 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                 ],
               ),
             ),
-          ),
-
-          // 🔻 Bottom Navigation Bar
-          BottomNav(
-            currentIndex: _currentIndex,
-            onTap: (index) {
-              setState(() => _currentIndex = index);
-
-              // 🧭 Add route navigation based on index
-              switch (index) {
-                case 0:
-                  context.go('/home');
-                  break;
-                case 1:
-                  context.go('/search');
-                  break;
-                case 2:
-                  context.go('/cart');
-                  break;
-                case 3:
-                  context.go('/favorites');
-                  break;
-                case 4:
-                  context.go('/profile');
-                  break;
-              }
-            },
           ),
         ],
       ),

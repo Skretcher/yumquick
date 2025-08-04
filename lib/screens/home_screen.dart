@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yumquick/utils/theme.dart';
-import 'package:yumquick/utils/bottomnav.dart ';
+import 'package:yumquick/utils/bottomnav.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,33 +11,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
-
-  void _onNavTap(int index) {
-    setState(() => _currentIndex = index);
-
-    // You can navigate with context.go('/route') here
-    // if you want each tab to push a screen.
-
-    switch (index) {
-      case 0:
-        context.go('/home');
-        break;
-      case 1:
-        context.go('/search');
-        break;
-      case 2:
-        context.go('/cart');
-        break;
-      case 3:
-        context.go('/favorites');
-        break;
-      case 4:
-        context.go('/profile');
-        break;
-    }
-  }
-
   Widget _buildDrawerItem(IconData icon, String title, {VoidCallback? onTap}) {
     return ListTile(
       leading: Icon(icon, color: AppColors.white),
@@ -367,56 +340,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           // // Bottom navigation bar
-          BottomNav(
-            currentIndex: _currentIndex,
-            onTap: _onNavTap,
-          ),
-
-          // Positioned(
-          //   left: 10,
-          //   right: 10,
-          //   bottom: 25,
-          //   child: Container(
-          //     decoration: BoxDecoration(
-          //       color: AppColors.orange,
-          //       borderRadius: BorderRadius.circular(AppSizes.buttonRadius),
-          //       boxShadow: const [
-          //         BoxShadow(
-          //           color: Colors.black12,
-          //           blurRadius: 10,
-          //           offset: Offset(0, 4),
-          //         ),
-          //       ],
-          //     ),
-          //     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //       children: [
-          //         IconButton(
-          //             icon: const Icon(Icons.home_outlined,
-          //                 color: AppColors.white, size: 28),
-          //             onPressed: () {}),
-          //         IconButton(
-          //             icon: const Icon(Icons.search,
-          //                 color: AppColors.white, size: 28),
-          //             onPressed: () {}),
-          //         IconButton(
-          //             icon: const Icon(Icons.shopping_cart_outlined,
-          //                 color: AppColors.white, size: 28),
-          //             onPressed: () {}),
-          //         IconButton(
-          //             icon: const Icon(Icons.favorite_border,
-          //                 color: AppColors.white, size: 28),
-          //             onPressed: () {}),
-          //         IconButton(
-          //             icon: const Icon(Icons.person_outline,
-          //                 color: AppColors.white, size: 28),
-          //             onPressed: () {}),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          // //End bottom navigation bar
+          const BottomNav(currentIndex: 0)
         ],
       ),
     );
