@@ -1,5 +1,3 @@
-// lib/screens/menu_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:yumquick/utils/theme.dart';
 import 'package:yumquick/utils/bottomnav.dart';
@@ -22,12 +20,12 @@ class _MenuScreenState extends State<MenuScreen> {
     'Drinks'
   ];
 
-  final Map<String, IconData> categoryIcons = {
-    'Snacks': Icons.fastfood,
-    'Meal': Icons.restaurant,
-    'Vegan': Icons.eco,
-    'Dessert': Icons.icecream,
-    'Drinks': Icons.local_drink,
+  final Map<String, String> categoryIcons = {
+    'Snacks': 'assets/icons/snack.png',
+    'Meal': 'assets/icons/meal.png',
+    'Vegan': 'assets/icons/vegan.png',
+    'Dessert': 'assets/icons/dessert.png',
+    'Drinks': 'assets/icons/drink.png',
   };
 
   final List<Map<String, String>> menuItems = [
@@ -113,7 +111,6 @@ class _MenuScreenState extends State<MenuScreen> {
       backgroundColor: AppColors.yellowDark,
       body: Stack(
         children: [
-          // Yellow Header
           Positioned(
             top: 0,
             left: 0,
@@ -127,85 +124,99 @@ class _MenuScreenState extends State<MenuScreen> {
                   bottomRight: Radius.circular(AppSizes.cardRadius),
                 ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, top: 50),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Search',
-                          filled: true,
-                          fillColor: AppColors.white,
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 8, horizontal: 16),
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.circular(AppSizes.inputRadius),
-                            borderSide: BorderSide.none,
-                          ),
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 50),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Search',
+                        filled: true,
+                        fillColor: AppColors.white,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 16),
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(AppSizes.inputRadius),
+                          borderSide: BorderSide.none,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    IconButton(
-                        icon: const Icon(Icons.notifications_none,
-                            color: AppColors.deepOrange),
-                        onPressed: () {}),
-                    IconButton(
-                        icon: const Icon(Icons.person_outline,
-                            color: AppColors.deepOrange),
-                        onPressed: () {}),
-                  ],
+                  ),
+                  const SizedBox(width: 8),
+                  IconButton(
+                      icon: const Icon(Icons.notifications_none,
+                          color: AppColors.deepOrange),
+                      onPressed: () {}),
+                  IconButton(
+                      icon: const Icon(Icons.person_outline,
+                          color: AppColors.deepOrange),
+                      onPressed: () {}),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            top: 150,
+            left: 0,
+            right: 0,
+            height: 150,
+            child: Container(
+              decoration: const BoxDecoration(
+                color: AppColors.deepOrange,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(AppSizes.cardRadius),
+                  topRight: Radius.circular(AppSizes.cardRadius),
                 ),
               ),
             ),
           ),
-
-          // Orange Layer
           Positioned(
-            top: 155,
-            left: 0,
-            right: 0,
-            height: 180,
-            child: Container(
-              decoration: const BoxDecoration(
-                  color: AppColors.deepOrange,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(AppSizes.cardRadius * 1),
-                    topRight: Radius.circular(AppSizes.cardRadius * 1),
-                  )),
-            ),
-          ),
-
-          // Category Bar
-          Positioned(
-            top: 185,
+            top: 170,
             left: 0,
             right: 0,
             height: 90,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               itemCount: categories.length,
               itemBuilder: (context, index) {
                 final isSelected = index == selectedCategoryIndex;
                 final category = categories[index];
                 return GestureDetector(
                   onTap: () => setState(() => selectedCategoryIndex = index),
-                  child: Container(
-                    width: 75,
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 250),
+                    curve: Curves.easeInOut,
+                    width: 80,
+                    margin: const EdgeInsets.symmetric(horizontal: 3),
                     decoration: BoxDecoration(
                       color:
                           isSelected ? AppColors.white : AppColors.deepOrange,
-                      borderRadius: BorderRadius.circular(28),
-                      border: Border.all(color: AppColors.deepOrange, width: 1),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(26),
+                        topRight: Radius.circular(26),
+                      ),
+                      boxShadow: isSelected
+                          ? [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.15),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
+                              )
+                            ]
+                          : [],
                     ),
-                    child: Center(
-                      child: Icon(
-                        categoryIcons[category],
-                        color: isSelected ? AppColors.orange : AppColors.white,
+                    child: Transform.translate(
+                      offset: isSelected ? const Offset(0, -6) : Offset.zero,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Image.asset(
+                          categoryIcons[category]!,
+                          fit: BoxFit.contain,
+                          width: 36,
+                          height: 36,
+                        ),
                       ),
                     ),
                   ),
@@ -213,8 +224,6 @@ class _MenuScreenState extends State<MenuScreen> {
               },
             ),
           ),
-
-          // White Content
           Positioned(
             top: 250,
             left: 0,
@@ -224,8 +233,8 @@ class _MenuScreenState extends State<MenuScreen> {
               decoration: const BoxDecoration(
                 color: AppColors.white,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(AppSizes.cardRadius * 1),
-                  topRight: Radius.circular(AppSizes.cardRadius * 1),
+                  topLeft: Radius.circular(AppSizes.cardRadius),
+                  topRight: Radius.circular(AppSizes.cardRadius),
                 ),
               ),
               child: Column(
@@ -260,43 +269,57 @@ class _MenuScreenState extends State<MenuScreen> {
                                 BorderRadius.circular(AppSizes.cardRadius),
                             boxShadow: [
                               BoxShadow(
-                                  color: Colors.black.withOpacity(0.05),
-                                  blurRadius: 5,
-                                  offset: const Offset(0, 2)),
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 5,
+                                offset: const Offset(0, 4),
+                              ),
                             ],
                           ),
-                          child: Row(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ClipRRect(
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(AppSizes.cardRadius),
-                                  bottomLeft:
+                                  topRight:
                                       Radius.circular(AppSizes.cardRadius),
                                 ),
                                 child: Image.asset(
                                   item['image'] ?? '',
-                                  width: 100,
-                                  height: 100,
-                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: 180,
+                                  fit: BoxFit.contain,
                                 ),
                               ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(item['title'] ?? '',
-                                          style: AppTextStyles.title),
-                                      const SizedBox(height: 4),
-                                      Text(item['description'] ?? '',
-                                          style: AppTextStyles.subtitle),
-                                      const SizedBox(height: 8),
-                                      Text(item['price'] ?? '',
-                                          style: AppTextStyles.price),
-                                    ],
-                                  ),
+                              Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            item['title'] ?? '',
+                                            style: AppTextStyles.title,
+                                          ),
+                                        ),
+                                        Text(
+                                          item['price'] ?? '',
+                                          style: AppTextStyles.price.copyWith(
+                                            color: AppColors.deepOrange,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      item['description'] ?? '',
+                                      style: AppTextStyles.subtitle,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -309,7 +332,6 @@ class _MenuScreenState extends State<MenuScreen> {
               ),
             ),
           ),
-
           const BottomNav(currentIndex: 1),
         ],
       ),

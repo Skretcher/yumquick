@@ -26,7 +26,7 @@ class AppTextStyles {
   static const welcome = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.bold,
-    color: AppColors.text,
+    color: Color.fromARGB(255, 245, 243, 243),
   );
 
   static const subtitle = TextStyle(

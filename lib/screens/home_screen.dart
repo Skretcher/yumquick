@@ -88,7 +88,10 @@ class _HomeScreenState extends State<HomeScreen> {
               const Divider(color: Colors.white54),
               _buildDrawerItem(Icons.phone_outlined, 'Contact Us'),
               const Divider(color: Colors.white54),
-              _buildDrawerItem(Icons.help_outline, 'Help & FAQs'),
+              _buildDrawerItem(Icons.help_rounded, 'Help & FAQs', onTap: () {
+                Navigator.pop(context); // Close the drawer
+                context.go('/help');
+              }),
               const Divider(color: Colors.white54),
               _buildDrawerItem(Icons.settings_outlined, 'Settings'),
               const Spacer(),
@@ -196,14 +199,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               CategoryIcon(
-                                  label: "Snacks", icon: Icons.fastfood),
+                                  // label: "Snacks",
+                                  imagePath: 'assets/icons/snack.png'),
                               CategoryIcon(
-                                  label: "Meal", icon: Icons.restaurant),
-                              CategoryIcon(label: "Vegan", icon: Icons.eco),
+                                  //  label: "Meal",
+                                  imagePath: 'assets/icons/meal.png'),
                               CategoryIcon(
-                                  label: "Dessert", icon: Icons.icecream),
+                                  //  label: "Vegan",
+                                  imagePath: 'assets/icons/vegan.png'),
                               CategoryIcon(
-                                  label: "Drinks", icon: Icons.local_drink),
+                                  //  label: "Dessert",
+                                  imagePath: 'assets/icons/dessert.png'),
+                              CategoryIcon(
+                                  //   label: "Drinks",
+                                  imagePath: 'assets/icons/drink.png'),
                             ],
                           ),
                           const SizedBox(height: 20),
@@ -349,16 +358,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class CategoryIcon extends StatelessWidget {
   final String label;
-  final IconData icon;
+  final IconData? icon;
+  final String? imagePath;
 
-  const CategoryIcon({required this.label, required this.icon, super.key});
-
+  const CategoryIcon({
+    this.label = '',
+    this.icon,
+    this.imagePath,
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(1),
           decoration: BoxDecoration(
             color: Colors.orange.shade50,
             borderRadius: BorderRadius.circular(16),
@@ -370,7 +384,9 @@ class CategoryIcon extends StatelessWidget {
               ),
             ],
           ),
-          child: Icon(icon, color: AppColors.deepOrange, size: 20),
+          child: imagePath != null
+              ? Image.asset(imagePath!, width: 65, height: 70)
+              : Icon(icon, color: AppColors.deepOrange, size: 20),
         ),
         const SizedBox(height: 6),
         Text(label, style: const TextStyle(fontSize: 12)),

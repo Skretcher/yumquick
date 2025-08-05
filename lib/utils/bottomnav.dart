@@ -69,7 +69,7 @@ class BottomNav extends StatelessWidget {
             context.go('/orders');
             break;
           case 4:
-            context.go('/support');
+            context.go('/help');
             break;
         }
       },

@@ -9,6 +9,7 @@ import 'package:yumquick/screens/signup_screen.dart';
 import 'package:yumquick/screens/home_screen.dart';
 import 'package:yumquick/screens/my_orders_screen.dart';
 import 'package:yumquick/screens/menu_screen.dart';
+import 'package:yumquick/screens/helpandfaq_screen.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
@@ -44,6 +45,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/menu',
       builder: (context, state) => const MenuScreen(),
+    ),
+    GoRoute(
+      path: '/help',
+      builder: (context, state) => const HelpAndFaqScreen(),
     ),
   ],
 );
