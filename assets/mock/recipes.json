@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Spaghetti Bolognese",
+    "body": "Classic Italian pasta with meat sauce.",
+    "image": "https://via.placeholder.com/400x200.png?text=Spaghetti"
+  },
+  {
+    "title": "Veggie Stir Fry",
+    "body": "A mix of fresh veggies sautéed in garlic sauce.",
+    "image": "https://via.placeholder.com/400x200.png?text=Veggie+Stir+Fry"
+  },
+  {
+    "title": "Grilled Salmon",
+    "body": "Salmon fillet grilled to perfection.",
+    "image": "https://via.placeholder.com/400x200.png?text=Grilled+Salmon"
+  },
+  {
+    "title": "Avocado Toast",
+    "body": "Toasted bread with mashed avocado and chili flakes.",
+    "image": null
+  }
+]

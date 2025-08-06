@@ -10,6 +10,9 @@ import 'package:yumquick/screens/home_screen.dart';
 import 'package:yumquick/screens/my_orders_screen.dart';
 import 'package:yumquick/screens/menu_screen.dart';
 import 'package:yumquick/screens/helpandfaq_screen.dart';
+import 'package:yumquick/screens/favorite_screen.dart';
+import 'package:yumquick/screens/recipe_screen.dart';
+import 'package:yumquick/screens/contact_us_screen.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
@@ -50,5 +53,17 @@ final GoRouter router = GoRouter(
       path: '/help',
       builder: (context, state) => const HelpAndFaqScreen(),
     ),
+    GoRoute(
+      path: '/favorites',
+      builder: (context, state) => const FavoriteScreen(),
+    ),
+    GoRoute(
+      path: '/recipes',
+      builder: (context, state) => const RecipeScreen(),
+    ),
+    GoRoute(
+      path: '/contact',
+      builder: (context, state) => ContactUsScreen(),
+    )
   ],
 );

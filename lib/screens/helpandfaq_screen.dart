@@ -61,7 +61,7 @@ class HelpAndFaqScreen extends StatelessWidget {
                           horizontal: 12, vertical: 8),
                       child: Text(
                         faq['answer']!,
-                        style: AppTextStyles.subtitle,
+                        style: const TextStyle(color: AppColors.text),
                       ),
                     ),
                   ],
@@ -75,7 +75,7 @@ class HelpAndFaqScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text('Have a question?', style: AppTextStyles.title),
+                const Text('Have a question?', style: AppTextStyles.title),
                 const SizedBox(height: 8),
                 TextField(
                   controller: queryController,
@@ -99,7 +99,10 @@ class HelpAndFaqScreen extends StatelessWidget {
                     backgroundColor: AppColors.deepOrange,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
-                  child: const Text('Submit'),
+                  child: const Text(
+                    'Submit',
+                    style: TextStyle(color: AppColors.white),
+                  ),
                 ),
               ],
             ),

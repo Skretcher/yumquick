@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     CircleAvatar(
                       radius: 30,
-                      backgroundImage: AssetImage('assets/images/avatar.png'),
+                      backgroundImage: AssetImage('assets/images/shake.png'),
                     ),
                     SizedBox(width: 12),
                     Column(
@@ -86,7 +86,23 @@ class _HomeScreenState extends State<HomeScreen> {
               const Divider(color: Colors.white54),
               _buildDrawerItem(Icons.credit_card_outlined, 'Payment Methods'),
               const Divider(color: Colors.white54),
-              _buildDrawerItem(Icons.phone_outlined, 'Contact Us'),
+              _buildDrawerItem(
+                Icons.menu_book,
+                'Recipes',
+                onTap: () {
+                  Navigator.pop(context); // Close the drawer
+                  context.go('/recipes');
+                },
+              ),
+              const Divider(color: Colors.white54),
+              _buildDrawerItem(
+                Icons.phone_outlined,
+                'Contact Us',
+                onTap: () {
+                  Navigator.pop(context); // Close the drawer
+                  context.go('/contact');
+                },
+              ),
               const Divider(color: Colors.white54),
               _buildDrawerItem(Icons.help_rounded, 'Help & FAQs', onTap: () {
                 Navigator.pop(context); // Close the drawer
