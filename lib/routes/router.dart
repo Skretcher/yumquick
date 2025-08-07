@@ -63,7 +63,7 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/contact',
-      builder: (context, state) => ContactUsScreen(),
+      builder: (context, state) => const ContactUsScreen(),
     )
   ],
 );

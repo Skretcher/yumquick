@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yumquick/utils/theme.dart';
 import 'package:yumquick/utils/bottomnav.dart';
+import 'package:yumquick/models/product.dart';
+import 'package:yumquick/services/product_service.dart';
+import 'package:yumquick/widgets/category_icon.dart';
+import 'package:yumquick/widgets/product_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,6 +15,26 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final ProductService _productService = ProductService();
+  List<Product> _bestSellers = [];
+  List<Product> _recommended = [];
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProducts();
+  }
+
+  Future<void> _loadProducts() async {
+    final products = await _productService.fetchProducts();
+    setState(() {
+      _bestSellers = products.where((p) => p.isBestSeller).toList();
+      _recommended = products.where((p) => p.isRecommended).toList();
+      _isLoading = false;
+    });
+  }
+
   Widget _buildDrawerItem(IconData icon, String title, {VoidCallback? onTap}) {
     return ListTile(
       leading: Icon(icon, color: AppColors.white),
@@ -25,7 +49,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //Drawer configuration
       endDrawer: Drawer(
         width: 365,
         backgroundColor: AppColors.deepOrange,
@@ -76,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 30),
               _buildDrawerItem(Icons.shopping_bag_rounded, 'My Orders',
                   onTap: () {
-                Navigator.pop(context); // Close the drawer
+                Navigator.pop(context);
                 context.go('/orders');
               }),
               const Divider(color: Colors.white54),
@@ -90,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Icons.menu_book,
                 'Recipes',
                 onTap: () {
-                  Navigator.pop(context); // Close the drawer
+                  Navigator.pop(context);
                   context.go('/recipes');
                 },
               ),
@@ -99,13 +122,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 Icons.phone_outlined,
                 'Contact Us',
                 onTap: () {
-                  Navigator.pop(context); // Close the drawer
+                  Navigator.pop(context);
                   context.go('/contact');
                 },
               ),
               const Divider(color: Colors.white54),
               _buildDrawerItem(Icons.help_rounded, 'Help & FAQs', onTap: () {
-                Navigator.pop(context); // Close the drawer
+                Navigator.pop(context);
                 context.go('/help');
               }),
               const Divider(color: Colors.white54),
@@ -122,8 +145,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-
-// AppBar configuration
       backgroundColor: AppColors.yellowDark,
       body: Stack(
         children: [
@@ -214,21 +235,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              CategoryIcon(imagePath: 'assets/icons/snack.png'),
+                              CategoryIcon(imagePath: 'assets/icons/meal.png'),
+                              CategoryIcon(imagePath: 'assets/icons/vegan.png'),
                               CategoryIcon(
-                                  // label: "Snacks",
-                                  imagePath: 'assets/icons/snack.png'),
-                              CategoryIcon(
-                                  //  label: "Meal",
-                                  imagePath: 'assets/icons/meal.png'),
-                              CategoryIcon(
-                                  //  label: "Vegan",
-                                  imagePath: 'assets/icons/vegan.png'),
-                              CategoryIcon(
-                                  //  label: "Dessert",
                                   imagePath: 'assets/icons/dessert.png'),
-                              CategoryIcon(
-                                  //   label: "Drinks",
-                                  imagePath: 'assets/icons/drink.png'),
+                              CategoryIcon(imagePath: 'assets/icons/drink.png'),
                             ],
                           ),
                           const SizedBox(height: 20),
@@ -245,23 +257,22 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                           const SizedBox(height: 12),
-                          SizedBox(
-                            height: 160,
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: const [
-                                ProductCard(
-                                    imageUrl: 'assets/images/Rectangle133.png',
-                                    price: '\$103.0'),
-                                ProductCard(
-                                    imageUrl: 'assets/images/Rectangle134.png',
-                                    price: '\$50.0'),
-                                ProductCard(
-                                    imageUrl: 'assets/images/Rectangle135.png',
-                                    price: '\$12.99'),
-                              ],
-                            ),
-                          ),
+                          _isLoading
+                              ? const Center(child: CircularProgressIndicator())
+                              : SizedBox(
+                                  height: 160,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: _bestSellers.length,
+                                    itemBuilder: (context, index) {
+                                      final product = _bestSellers[index];
+                                      return ProductCard(
+                                        imageUrl: product.imageUrl,
+                                        price: product.price,
+                                      );
+                                    },
+                                  ),
+                                ),
                           const SizedBox(height: 20),
                           Padding(
                             padding: const EdgeInsets.all(16),
@@ -325,35 +336,25 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                           const SizedBox(height: 12),
-                          SizedBox(
-                            height: 220,
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: const [
-                                ProductCard(
-                                  imageUrl: 'assets/images/Rectangle137.png',
-                                  price: '\$10.0',
-                                  showRating: true,
-                                  rating: '5.0',
-                                  isLarge: true,
+                          _isLoading
+                              ? const Center(child: CircularProgressIndicator())
+                              : SizedBox(
+                                  height: 220,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: _recommended.length,
+                                    itemBuilder: (context, index) {
+                                      final product = _recommended[index];
+                                      return ProductCard(
+                                        imageUrl: product.imageUrl,
+                                        price: product.price,
+                                        showRating: true,
+                                        rating: product.rating ?? '',
+                                        isLarge: true,
+                                      );
+                                    },
+                                  ),
                                 ),
-                                ProductCard(
-                                  imageUrl: 'assets/images/Rectangle128.png',
-                                  price: '\$25.0',
-                                  showRating: true,
-                                  rating: '4.5',
-                                  isLarge: true,
-                                ),
-                                ProductCard(
-                                  imageUrl: 'assets/images/Rectangle134.png',
-                                  price: '\$32.0',
-                                  showRating: true,
-                                  rating: '4.7',
-                                  isLarge: true,
-                                ),
-                              ],
-                            ),
-                          ),
                           const SizedBox(height: 20),
                         ],
                       ),
@@ -363,133 +364,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-
-          // // Bottom navigation bar
-          const BottomNav(currentIndex: 0)
+          const BottomNav(currentIndex: 0),
         ],
       ),
     );
   }
 }
 
-class CategoryIcon extends StatelessWidget {
-  final String label;
-  final IconData? icon;
-  final String? imagePath;
-
-  const CategoryIcon({
-    this.label = '',
-    this.icon,
-    this.imagePath,
-    super.key,
-  });
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(1),
-          decoration: BoxDecoration(
-            color: Colors.orange.shade50,
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.orange.shade100,
-                blurRadius: 4,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: imagePath != null
-              ? Image.asset(imagePath!, width: 65, height: 70)
-              : Icon(icon, color: AppColors.deepOrange, size: 20),
-        ),
-        const SizedBox(height: 6),
-        Text(label, style: const TextStyle(fontSize: 12)),
-      ],
-    );
-  }
-}
-
-class ProductCard extends StatelessWidget {
-  final String imageUrl;
-  final String price;
-  final bool showRating;
-  final String rating;
-  final bool isLarge;
-
-  const ProductCard({
-    super.key,
-    required this.imageUrl,
-    required this.price,
-    this.showRating = false,
-    this.rating = '',
-    this.isLarge = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 10),
-      child: Stack(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: Image.asset(
-              imageUrl,
-              width: isLarge ? 180 : 130,
-              height: isLarge ? 200 : 140,
-              fit: BoxFit.cover,
-            ),
-          ),
-          if (showRating)
-            Positioned(
-              top: 8,
-              left: 8,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                decoration: BoxDecoration(
-                  color: AppColors.white.withOpacity(0.85),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Row(
-                  children: [
-                    Text(rating,
-                        style: const TextStyle(
-                            fontSize: 10, fontWeight: FontWeight.bold)),
-                    const SizedBox(width: 2),
-                    const Icon(Icons.star, size: 12, color: Colors.amber),
-                  ],
-                ),
-              ),
-            ),
-          const Positioned(
-            top: 8,
-            right: 8,
-            child:
-                Icon(Icons.favorite_border, color: AppColors.white, size: 20),
-          ),
-          Positioned(
-            bottom: 30,
-            right: -1,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: AppColors.deepOrange,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                price,
-                style: const TextStyle(
-                  color: AppColors.white,
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+// CategoryIcon and ProductCard widgets remain unchanged.
